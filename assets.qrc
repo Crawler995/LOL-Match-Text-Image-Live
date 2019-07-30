@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>images/icons/close.png</file>
+        <file>images/icons/close-hover.png</file>
+        <file>images/icons/close-press.png</file>
+        <file>images/icons/minus.png</file>
+        <file>images/icons/minus-hover.png</file>
+        <file>images/icons/minus-press.png</file>
+        <file>images/icons/spinner-1.gif</file>
+        <file>images/icons/spinner-2.gif</file>
+    </qresource>
+    <qresource prefix="/images">
+        <file>images/bg-1.jpg</file>
+    </qresource>
+</RCC>
