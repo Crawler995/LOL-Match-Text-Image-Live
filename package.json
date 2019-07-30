@@ -1,0 +1,20 @@
+{
+  "name": "LOL-Match-Live",
+  "version": "1.0.0",
+  "description": "此软件使用`Qt C++`开发，将英雄联盟（League of Legends）官方图文直播统一整合在此软件中，并且在有新赛点（击杀、推塔、团战等等）出现时使用弹窗进行提醒，达到在使用电脑进行学习的同时收看英雄联盟比赛图文直播**且不影响学习**的目的。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cz-conventional-changelog": "^3.0.2"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
