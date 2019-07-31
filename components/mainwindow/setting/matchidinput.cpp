@@ -1,5 +1,6 @@
 #include "matchidinput.h"
 #include "../../../features/colorboard.h"
+#include "../../../features/utils.h"
 
 #include <QRegExp>
 #include <QValidator>
@@ -70,10 +71,11 @@ void MatchIDInput::getTodayMatch() {
     loop.exec();
 
     if(reply->error() != QNetworkReply::NoError) {
-        qDebug() << reply->errorString();
+        LDebug(QString("get today match error: %1").arg(reply->errorString()), __FILE__, __LINE__);
         todayMatchLabel->setText("获取今日比赛失败 ×");
         return;
     }
+    LDebug("get today match", __FILE__, __LINE__);
 
     QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
     delete reply;

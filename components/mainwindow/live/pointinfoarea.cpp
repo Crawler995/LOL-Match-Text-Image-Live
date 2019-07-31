@@ -1,6 +1,7 @@
 #include "pointinfoarea.h"
 #include "pointinfo.h"
 #include "features/colorboard.h"
+#include "features/utils.h"
 
 #include <QWidget>
 #include <QScrollArea>
@@ -65,7 +66,7 @@ int PointInfoArea::getPrePointInfoNum() const {
 }
 
 void PointInfoArea::setPrePointInfoNum(int value) {
-    qDebug() << "point info num: " << prePointInfoNum << " -> " << value;
+    LDebug(QString("point info num: %1 -> %2").arg(prePointInfoNum).arg(value), __FILE__, __LINE__);
     prePointInfoNum = value;
 }
 

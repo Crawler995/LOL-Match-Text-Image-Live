@@ -2,6 +2,7 @@
 #include "pointinfo.h"
 #include "features/colorboard.h"
 #include "features/fontloader.h"
+#include "features/utils.h"
 #include "features/setting/settinghandler.h"
 #include "../../popupwindow/popupwindow.h"
 
@@ -78,6 +79,7 @@ void LiveArea::deletePreParseThread() {
 }
 
 void LiveArea::setMatchInfo() {
+    LDebug("set match info", __FILE__, __LINE__);
     matchInfo->setTeamAName(matchParser->getTeamAName());
     matchInfo->setTeamBName(matchParser->getTeamBName());
     matchInfo->setTeamAScore(matchParser->getTeamAScore());
@@ -87,6 +89,7 @@ void LiveArea::setMatchInfo() {
 }
 
 void LiveArea::setPointInfo() {
+    LDebug("set point info", __FILE__, __LINE__);
     pointInfoArea->clearNetworkErrorInfo();
 
     QVector<PointInfoContent*> pointInfoContents = matchParser->getPointInfoContents();
@@ -126,6 +129,7 @@ void LiveArea::setPointInfo() {
 
     if(needPopupWindow) {
         popupWindow->popup();
+        LDebug("popup window", __FILE__, __LINE__);
     }
 
     pointInfoArea->setPrePointInfoNum(pointInfoContents.length());

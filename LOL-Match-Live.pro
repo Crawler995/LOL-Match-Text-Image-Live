@@ -42,7 +42,8 @@ SOURCES += main.cpp \
     features/live/matchinfoparser.cpp \
     components/mainwindow/setting/matchidinput.cpp \
     components/popupwindow/popupwindow.cpp \
-    components/popupwindow/popuppointinfo.cpp
+    components/popupwindow/popuppointinfo.cpp \
+    features/utils.cpp
 
 HEADERS  += \
     lolmatchliveapp.h \
@@ -63,7 +64,8 @@ HEADERS  += \
     features/live/matchinfoparser.h \
     components/mainwindow/setting/matchidinput.h \
     components/popupwindow/popupwindow.h \
-    components/popupwindow/popuppointinfo.h
+    components/popupwindow/popuppointinfo.h \
+    features/utils.h
 
 RESOURCES += \
     assets.qrc

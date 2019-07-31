@@ -1,4 +1,5 @@
 #include "matchinfoparser.h"
+#include "../../features/utils.h"
 
 #include <QRegExp>
 #include <QTimer>
@@ -51,11 +52,11 @@ void MatchParser::startParsingMatchAndPointInfo() {
 
 void MatchParser::parsingMatchInfoFinished(QNetworkReply *matchInfoReply) {
     if(matchInfoReply->error() != QNetworkReply::NoError) {
-        qDebug() << "Parsing match info network error";
+        LDebug(QString("parsing match info network error: %1").arg(matchInfoReply->errorString()), __FILE__, __LINE__);
         emit getInfoNetworkError(matchInfoReply->errorString());
         return;
     }
-    qDebug() << "Parsing match info finished";
+    LDebug("parsing match info finished", __FILE__, __LINE__);
     QString totalMatchInfoString =  QString::fromUtf8(matchInfoReply->readAll());
     delete matchInfoReply;
 
@@ -86,12 +87,11 @@ void MatchParser::parsingMatchInfoFinished(QNetworkReply *matchInfoReply) {
 
 void MatchParser::parsingPointInfoFinished(QNetworkReply *pointInfoReply) {
     if(pointInfoReply->error() != QNetworkReply::NoError) {
-        qDebug() << "Parsing point info network error";
-        qDebug() << pointInfoReply->error();
+        LDebug(QString("parsing point info network error: %1").arg(pointInfoReply->errorString()), __FILE__, __LINE__);
         emit getInfoNetworkError(pointInfoReply->errorString());
         return;
     }
-    qDebug() << "Parsing point info finished";
+    LDebug("parsing point info finished", __FILE__, __LINE__);
     QByteArray pointInfoByteArray = pointInfoReply->readAll();
     delete pointInfoReply;
 
@@ -104,11 +104,9 @@ void MatchParser::parsingPointInfoFinished(QNetworkReply *pointInfoReply) {
     else {
         if(isFirstGetPointInfoFromDuoWan) {
             changeLiveUrlFromDuoWan(pointInfoByteArray);
-            qDebug() << "duowan start";
             startParsingPointInfo();
             return;
         }
-        qDebug() << "duowan finished";
         pointInfoByteArray = QString::fromUtf8(pointInfoByteArray).replace("getDataSucc(", "")
                                                                   .replace(QRegExp("\\)$"), "")
                                                                   .toLocal8Bit()
@@ -121,7 +119,7 @@ void MatchParser::parsingPointInfoFinished(QNetworkReply *pointInfoReply) {
 }
 
 void MatchParser::startParsingMatchInfo() {
-    qDebug() << "Start parsing match info";
+    LDebug("start parsing match info", __FILE__, __LINE__);
     if(!matchInfoManager) {
         matchInfoManager = new QNetworkAccessManager();
         connect(matchInfoManager, SIGNAL(finished(QNetworkReply*)), this,
@@ -144,7 +142,7 @@ QString MatchParser::getMatchStatus() const
 }
 
 void MatchParser::startParsingPointInfo() {
-    qDebug() << "Start parsing point info";
+    LDebug("start parsing point info", __FILE__, __LINE__);
     if(!pointInfoManager) {
         pointInfoManager = new QNetworkAccessManager();
         connect(pointInfoManager, SIGNAL(finished(QNetworkReply*)), this,
@@ -262,6 +260,7 @@ void MatchParser::addNewPointInfoContentNotFromDuoWan(const QString &totalPointI
     }
 
     prePointInfoContentNum = pointInfoTimes.length();
+
     emit canGetPointInfo();
 }
 
