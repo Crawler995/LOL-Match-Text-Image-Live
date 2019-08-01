@@ -38,7 +38,7 @@ void PopupWindow::initStyles() {
     setFixedWidth(screenWidth / 6);
     move(screenWidth, 0);
 
-    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint | Qt::SubWindow);
+    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint | Qt::CoverWindow);
     //setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
 }
 
