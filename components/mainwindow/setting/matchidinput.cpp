@@ -87,6 +87,13 @@ void MatchIDInput::getTodayMatchFinished(QNetworkReply *reply) {
     QJsonObject obj = doc.object();
 
     QJsonArray arr = obj.value(QString("live_list")).toArray();
+
+    if(arr.size() == 0) {
+        LDebug("today no match", __FILE__, __LINE__);
+        todayMatchLabel->setText("今日无比赛……");
+        return;
+    }
+
     for(auto i = arr.constBegin(); i != arr.constEnd(); i++) {
         QJsonObject liveObj = (*i).toObject();
         int matchID = liveObj.value(QString("bMatchId")).toString().toInt();
@@ -107,6 +114,5 @@ void MatchIDInput::getTodayMatchFinished(QNetworkReply *reply) {
     }
 
     setLayout(layout);
-
     todayMatchLabel->setText("今日比赛如下，点击可自动填写比赛ID：");
 }
