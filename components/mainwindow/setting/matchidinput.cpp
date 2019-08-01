@@ -51,7 +51,7 @@ MatchIDInput::MatchIDInput(QWidget *parent) : QWidget(parent) {
 
     setLayout(layout);
 
-    getTodayMatch();
+    startGetTodayMatch();
 }
 
 QPushButton *MatchIDInput::getSubmitMatchIDButton() const {
@@ -62,14 +62,19 @@ QLineEdit *MatchIDInput::getMatchIDLineEdit() const {
     return matchIDLineEdit;
 }
 
-void MatchIDInput::getTodayMatch() {
+void MatchIDInput::startGetTodayMatch() {
     QUrl url("http://qt.qq.com/php_cgi/lol_mobile/gamecenter/varcache_index.php?plat=android&version=9891");
-    QEventLoop loop;
-    QNetworkAccessManager manager;
-    connect(&manager, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
-    QNetworkReply *reply = manager.get(QNetworkRequest(url));
-    loop.exec();
+    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+    connect(manager, SIGNAL(finished(QNetworkReply*)),
+            this, SLOT(getTodayMatchFinished(QNetworkReply*)));
+    manager->get(QNetworkRequest(url));
+}
 
+void MatchIDInput::autoInputMatchID(int index) {
+    matchIDLineEdit->setText(QString::number(matchIDs.at(index)));
+}
+
+void MatchIDInput::getTodayMatchFinished(QNetworkReply *reply) {
     if(reply->error() != QNetworkReply::NoError) {
         LDebug(QString("get today match error: %1").arg(reply->errorString()), __FILE__, __LINE__);
         todayMatchLabel->setText("获取今日比赛失败 ×");
@@ -104,8 +109,4 @@ void MatchIDInput::getTodayMatch() {
     setLayout(layout);
 
     todayMatchLabel->setText("今日比赛如下，点击可自动填写比赛ID：");
-}
-
-void MatchIDInput::autoInputMatchID(int index) {
-    matchIDLineEdit->setText(QString::number(matchIDs.at(index)));
 }

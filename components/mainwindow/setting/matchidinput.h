@@ -6,6 +6,7 @@
 #include <QPushButton>
 #include <QGridLayout>
 #include <QVector>
+#include <QNetworkReply>
 #include <QLabel>
 
 class MatchIDInput : public QWidget {
@@ -15,7 +16,6 @@ public:
 
     QPushButton *getSubmitMatchIDButton() const;
     QLineEdit *getMatchIDLineEdit() const;
-    void getTodayMatch();
 
 private:
     QGridLayout *layout;
@@ -25,7 +25,11 @@ private:
     QVector<QPushButton*> todayMatchButton;
     QVector<int> matchIDs;
 
+    void startGetTodayMatch();
     void autoInputMatchID(int index);
+
+private slots:
+    void getTodayMatchFinished(QNetworkReply* reply);
 };
 
 #endif // MATCHIDINPUT_H
