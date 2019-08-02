@@ -128,8 +128,10 @@ QString PointInfo::getText() const {
 }
 
 void PointInfo::resizeEvent(QResizeEvent *event) {
-    emit becomeTrueSize();
-    alreadyBecomeTrueSize = true;
+    if(!alreadyBecomeTrueSize) {
+        emit becomeTrueSize();
+        alreadyBecomeTrueSize = true;
+    }
 }
 
 bool PointInfo::isInVisibleArea(int value) {

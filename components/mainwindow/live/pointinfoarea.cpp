@@ -90,7 +90,7 @@ int PointInfoArea::getAreaHeight() const {
 
 void PointInfoArea::resizeEvent(QResizeEvent *event) {
     areaHeight = this->viewport()->geometry().height();
-    //emit initFinished();
+    this->widget()->resize(this->viewport()->geometry().width(), this->widget()->height());
 }
 
 void PointInfoArea::initStyles() {
