@@ -6,12 +6,16 @@
 #include <QString>
 #include <QDebug>
 #include <QHBoxLayout>
+#include <QTime>
+#include <QDate>
 
 MatchInfo::MatchInfo(QWidget *parent) : QWidget(parent) {
     teamAScore = teamBScore = 0;
     teamAName = "TEAM A";
     teamBName = "TEAM B";
-    matchTime = "1970-01-01 00:00:00";
+    //matchTime = "1970-01-01 00:00:00";
+    matchTime = QDate::currentDate().toString("yyyy.MM.dd").replace(".", "-") + " " +
+                QTime::currentTime().toString("hh:mm:ss");
     matchStatus = "未开始";
 
     layout = new QGridLayout(this);
@@ -73,10 +77,12 @@ void MatchInfo::setTeamBScore(int score) {
 
 void MatchInfo::setMatchTime(const QString &time) {
     matchTime = time;
+    matchTimeLabel->setText(matchTime);
 }
 
 void MatchInfo::setMatchStatus(const QString &status) {
     matchStatus = status;
+    matchStatusLabel->setText(matchStatus);
 }
 
 void MatchInfo::loadParsingGif() {
@@ -93,8 +99,6 @@ void MatchInfo::clearParsingGif() {
         parsingGif = nullptr;
     }
 
-    matchTimeLabel->setText(matchTime);
-    matchStatusLabel->setText(matchStatus);
     scoreLabel->setText(QString("%1 : %2").arg(teamAScore).arg(teamBScore));
 }
 

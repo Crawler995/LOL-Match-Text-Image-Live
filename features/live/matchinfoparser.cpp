@@ -68,12 +68,25 @@ void MatchParser::parsingMatchInfoFinished(QNetworkReply *matchInfoReply) {
     teamAName = captureText(teamANameRegx, totalMatchInfoString);
     QRegExp teamBNameRegx("\"TeamNameB\":\"(\\S+)\"");
     teamBName = captureText(teamBNameRegx, totalMatchInfoString);
+
+    QRegExp matchTimeRegx("\"MatchTime\":\"(.*)\"");
+    matchTime = captureText(matchTimeRegx, totalMatchInfoString);
+
     QRegExp matchStatusRegx("\"MatchStatus\":\"(\\S+)\"");
     QStringList matchStatusStr;
     matchStatusStr << "未开始" << "即将开始或正在进行" << "已结束";
-    matchStatus = matchStatusStr.at(captureText(matchStatusRegx, totalMatchInfoString).toInt() - 1);
-    QRegExp matchTimeRegx("\"MatchTime\":\"(.*)\"");
-    matchTime = captureText(matchTimeRegx, totalMatchInfoString);
+    int index = captureText(matchStatusRegx, totalMatchInfoString).toInt() - 1;
+    matchStatus = matchStatusStr.at(index);
+    if(index == 1) {
+        QTime now = QTime::currentTime();
+        QRegExp matchHourAndMinuteRegx("(\\d+):(\\d+):(\\d+)");
+        matchHourAndMinuteRegx.indexIn(matchTime);
+        int matchHour = matchHourAndMinuteRegx.capturedTexts()[1].toInt();
+        int matchMinute = matchHourAndMinuteRegx.capturedTexts()[2].toInt();
+        bool matchStarted = (now.hour() > matchHour) ||
+                            (now.hour() == matchHour && now.minute() > matchMinute);
+        matchStatus = matchStarted ? "正在进行" : "即将开始";
+    }
 
     if(isFirstGetPointInfoFromDuoWan) {
         QRegExp liveUrlRegx("\"sExt2Src\":\"(.*)\"");
