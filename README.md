@@ -4,6 +4,16 @@
 
 ![main_window.PNG](https://github.com/Crawler995/LOL-Match-Text-Image-Live/blob/master/docs/main_window.PNG)
 
+## Tips
+1. 若想要编译打包出可移植应用，则可能需要自行修改`lolmatchliveapp.cpp`中的第13行的字体路径。在debug模式下编译出的.exe位于/debug文件夹中，所以源码中字体路径为`/../font/BeaufortforLOLJa-Regular.ttf`（字体文件过大，无法加入Qt资源文件.qrc中，只能写死路径）。
+
+2. 目前暂时无法通过比赛时间、双方等信息得到比赛ID，所以只能通过手动输入或选择今日比赛填写比赛ID。后续有可能的话将继续寻找能获得比赛ID的接口。下面是一些经典比赛的比赛ID：
+| 比赛名称 | 比赛双方 | 比赛ID |
+| :- | :- | :- |
+| 2019年洲际赛决赛 | LPL VS LCK | 5359 |
+| 2019年季中冠军赛淘汰赛 | IG VS G2 | 4878 |
+| 2019年LPL夏季赛季后赛 | RNG VS TES | 5435 |
+
 ## Features (for programmers)
 
 1. 使用`Qt5 C++`进行开发，布局均使用代码编写，无`ui`文件，代码量2500行左右。
